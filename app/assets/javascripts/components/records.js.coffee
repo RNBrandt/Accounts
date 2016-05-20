@@ -1,4 +1,14 @@
 @Records = React.createClass
+  credits: ->
+    credits = @state.records.filter (val) -> val.amount >= 0
+    credits.reduce ((prev, curr) ->
+      prev + parseFloat(curr.amount)
+    ), 0
+  debits: ->
+    debits = @state.records.filter (val) -> val.amount < 0
+    debits.reduce ((prev, curr) ->
+      prev + parseFloat(curr.amount)
+    ), 0
   addRecord: (record) ->
     records = @state.records.slice()
     records.push record
@@ -11,16 +21,6 @@
           'Records'
         React.createElement RecordForm, handleNewRecord: @addRecord
         React.DOM.hr null
-  credits: ->
-    credits = @state.records.filter (val) -> val.amount >= 0
-    credits.reduce ((prev, curr) ->
-      prev + parseFloat(curr.amount)
-    ), 0
-  debits: ->
-    debits = @state.records.filter (val) -> val.amount < 0
-    debits.reduce ((prev, curr) ->
-      prev + parseFloat(curr.amount)
-    ), 0
   balance: ->
     @debits() + @credits()
   getInitialState: ->

@@ -3,7 +3,7 @@ class RecordsController < ApplicationController
     @records = Record.all
   end
   def create
-    @records = Record.new(record_params)
+    @record = Record.new(record_params)
     if @record.save
       render json: @record
     else
@@ -12,8 +12,8 @@ class RecordsController < ApplicationController
   end
 
   private
-
   def record_params
     params.require(:record).permit(:title, :amount, :date)
   end
 end
+
